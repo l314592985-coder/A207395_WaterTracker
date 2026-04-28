@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.a207395_liuzhaohe_izwan_lab1"
+    namespace = "com.example.a207395_liuzhaohe_izwan_lab"
     compileSdk {
         version = release(36) {
             minorApiLevel = 1
@@ -12,7 +12,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.a207395_liuzhaohe_izwan_lab1"
+        applicationId = "com.example.a207395_liuzhaohe_izwan_lab"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
@@ -52,6 +52,12 @@ dependencies {
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.animation.core)
     implementation("androidx.compose.ui:ui-text-google-fonts:1.6.0")
+    implementation("androidx.navigation:navigation-compose:2.7.7")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.compose.foundation.layout)
+    implementation(libs.androidx.ui)
+    implementation("io.coil-kt:coil-compose:2.6.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

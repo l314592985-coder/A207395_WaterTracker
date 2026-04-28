@@ -1,4 +1,4 @@
-package com.example.a207395_liuzhaohe_izwan_lab1
+package com.example.a207395_liuzhaohe_izwan_lab
 
 import org.junit.Test
 
