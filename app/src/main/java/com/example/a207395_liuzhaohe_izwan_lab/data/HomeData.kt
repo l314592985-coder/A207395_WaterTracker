@@ -5,8 +5,8 @@ import androidx.compose.runtime.mutableStateListOf
 // 定义数据类 (Task 2)
 // 检查你的数据类定义
 data class HomeData(
-    val home_name: String, // 字段1
-    var current: Double, // 字段2
+    val home_name: String, //  字段1
+    var current: Double, //  字段2
     /**target：每日用水上限
      * 原来这里是 val（只读）
      * val 创建后就不能修改

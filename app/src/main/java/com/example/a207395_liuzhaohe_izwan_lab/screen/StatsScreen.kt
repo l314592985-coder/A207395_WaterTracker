@@ -63,7 +63,7 @@ fun StatsScreen(viewModel: WaterViewModel) {
                 .verticalScroll(rememberScrollState())
         ) {
 
-            // --- 标题：改为与 Compare 页面完全一致 ---
+            // 标题：改为与 Compare 页面完全一致
             Row(
                 modifier = Modifier
                     .fillMaxWidth()

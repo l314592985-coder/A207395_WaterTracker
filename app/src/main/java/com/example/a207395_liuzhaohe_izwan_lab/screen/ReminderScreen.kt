@@ -142,7 +142,7 @@ fun ExpandableReminderCard(homeName: String, onStatusChange: (String) -> Unit) {
 
                 // 设置项 1: 今日用水量超标提醒
                 ReminderSwitchRow(
-                    label = "Daily water usage exceeded alert", // ✅ 改为英文
+                    label = "Daily water usage exceeded alert", // 改为英文
                     checked = overLimitEnabled,
                     onCheckedChange = {
                         overLimitEnabled = it
@@ -154,7 +154,7 @@ fun ExpandableReminderCard(homeName: String, onStatusChange: (String) -> Unit) {
 
                 // 设置项 2: 添加用水量提醒
                 ReminderSwitchRow(
-                    label = "Water intake reminder", // ✅ 改为英文
+                    label = "Water intake reminder", // 改为英文
                     checked = addWaterEnabled,
                     onCheckedChange = {
                         addWaterEnabled = it

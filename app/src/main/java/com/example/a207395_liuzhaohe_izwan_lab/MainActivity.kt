@@ -167,7 +167,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-// 修改后的 BottomNavigationBar
 @Composable
 fun BottomNavigationBar(navController: androidx.navigation.NavController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()

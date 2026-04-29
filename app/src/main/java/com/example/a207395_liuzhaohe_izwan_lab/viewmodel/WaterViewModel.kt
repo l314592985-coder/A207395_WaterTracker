@@ -165,8 +165,7 @@ class WaterViewModel : ViewModel() {
         }
     }
 
-    /**删除某个 Home
-     * @param index 表示第几个 Home*/
+    //删除某个 Home，@param index 表示第几个 Home
     fun deleteHome(index: Int) {
         // 检查 index 是否有效
         if (index in homeList.indices) {

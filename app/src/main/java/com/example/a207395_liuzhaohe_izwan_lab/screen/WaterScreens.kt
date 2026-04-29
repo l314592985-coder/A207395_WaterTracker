@@ -453,7 +453,7 @@ fun HomeProgressCard(
                         }
                     }
 
-                    // ===== 折线图（恢复）=====
+                    // ===== 折线图 =====
                     item {
                         CardContentBox(title = "Statistics") {
 

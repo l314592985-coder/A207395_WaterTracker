@@ -133,7 +133,7 @@ fun ProfileScreen(viewModel: WaterViewModel) {
                 }
             }
 
-            //Spacer：空白间距
+            // Spacer：空白间距
             Spacer(modifier = Modifier.height(50.dp))
 
             /**================= 新增 Card =================
@@ -155,7 +155,7 @@ fun ProfileScreen(viewModel: WaterViewModel) {
                     .padding(vertical = 8.dp)
             ) {
 
-                //Card 内部内容
+                // Card 内部内容
                 Column(
                     modifier = Modifier.padding(16.dp)
                 ) {
@@ -169,7 +169,7 @@ fun ProfileScreen(viewModel: WaterViewModel) {
 
                     Spacer(modifier = Modifier.height(15.dp))
 
-                    //输入框 用户输入新的 daily limit
+                    // 输入框 用户输入新的 daily limit
                     OutlinedTextField(
                         value = inputLimit,
                         onValueChange = {
@@ -184,7 +184,7 @@ fun ProfileScreen(viewModel: WaterViewModel) {
 
                     Spacer(modifier = Modifier.height(20.dp))
 
-                    //更新按钮
+                    // 更新按钮
                     Button(
                         onClick = {
                             val newLimit = inputLimit.toDoubleOrNull()
@@ -221,7 +221,7 @@ fun ProfileScreen(viewModel: WaterViewModel) {
             }
         }
 
-        //顶部提示
+        // 顶部提示
         SnackbarHost(
             hostState = snackbarHostState,
             modifier = Modifier

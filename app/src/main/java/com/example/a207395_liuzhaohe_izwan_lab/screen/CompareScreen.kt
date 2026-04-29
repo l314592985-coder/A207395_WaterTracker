@@ -197,18 +197,18 @@ fun CompareScreen(viewModel: WaterViewModel) {
 @Composable
 fun CompareLineChart(
     home: com.example.a207395_liuzhaohe_izwan_lab.data.HomeData,
-    benchmark: Float   // 👈 当前选中的值（160 / 230 / 300）
+    benchmark: Float   // 当前选中的值（160 / 230 / 300）
 ) {
     val primaryColor = MaterialTheme.colorScheme.primary
-    // ⭐ 第一步：让 benchmark 变成“动画值”
+    // 第一步：让 benchmark 变成“动画值”
     // animateFloatAsState 会自动帮你：
     // 从“旧值”平滑过渡到“新值”
     val animatedBenchmark by animateFloatAsState(
 
-        // 👇 目标值（你点击按钮后会改变）
+        // 目标值（你点击按钮后会改变）
         targetValue = benchmark,
 
-        // 👇 动画配置（时间 + 动画曲线）
+        // 动画配置（时间 + 动画曲线）
         animationSpec = tween(
             durationMillis = 600,              // 动画时长 600ms
             easing = FastOutSlowInEasing       // 动画曲线（先慢→快→慢）
@@ -217,7 +217,7 @@ fun CompareLineChart(
         label = "benchmarkAnimation" // 可忽略（调试用）
     )
 
-    // ⭐ 第二步：你的原数据（不变）
+    // 第二步：你的原数据（不变）
     val safeValue = (home.current / 400f)
         .toFloat()
         .coerceIn(0f, 1f)
@@ -232,25 +232,25 @@ fun CompareLineChart(
         ) {
             val width = size.width
             val height = size.height
-            // ⭐ 第三步：用“动画值”计算 Y 坐标
+            // 第三步：用“动画值”计算 Y 坐标
             // 原来是 benchmark，现在改成 animatedBenchmark
             val benchY = height - (animatedBenchmark / 400f * height)
 
-            // ⭐ 第四步：画“会动的虚线”
+            // 第四步：画“会动的虚线”
             drawLine(
                 color = Color.LightGray,
                 start = Offset(0f, benchY),
                 end = Offset(width, benchY),
                 strokeWidth = 2.dp.toPx(),
 
-                // 👇 虚线效果
+                // 虚线效果
                 pathEffect = PathEffect.dashPathEffect(
                     floatArrayOf(15f, 15f),
                     0f
                 )
             )
 
-            // ⭐ 原有用户数据曲线（不动）
+            // 原有用户数据曲线（不动）
             val path = Path()
             dataPoints.forEachIndexed { i, v ->
                 val x = i * (width / (dataPoints.size - 1))
@@ -276,7 +276,7 @@ fun CompareLineChart(
             )
         }
 
-        // ⭐ 月份显示（你原本的逻辑）
+        // 月份显示（你原本的逻辑）
         Row(
             modifier = Modifier
                 .fillMaxWidth()
