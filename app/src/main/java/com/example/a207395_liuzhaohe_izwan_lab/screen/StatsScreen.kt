@@ -38,12 +38,17 @@ import java.util.Locale
 import androidx.compose.foundation.layout.Box
 import androidx.compose.ui.graphics.Path
 import java.time.format.TextStyle
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.draw.shadow
 
 @RequiresApi(Build.VERSION_CODES.O)
 
 @Composable
 
-fun StatsScreen(viewModel: WaterViewModel) {
+fun StatsScreen(viewModel:WaterViewModel){
+    val homeList by viewModel.homeList.collectAsState()
+
     // ✅ 新增：外层 Box（关键）
     Box(modifier = Modifier.fillMaxSize()) {
         // ✅ 背景图（你给的代码）
@@ -81,15 +86,30 @@ fun StatsScreen(viewModel: WaterViewModel) {
             }
 
             Spacer(modifier = Modifier.height(20.dp))
+
             // 使用 ViewModel 中的数据
             // ViewModel 的数据在屏幕旋转（configuration change）时不会丢失
             // 因此 UI 会自动恢复状态
-            viewModel.homeList.forEach { home ->
+            homeList.forEach{ home ->
                 Card(
-                    modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp)
+                        .shadow(
+                            elevation = 8.dp,
+                            shape = RoundedCornerShape(20.dp),
+                            clip = false
+                        ),
+
                     shape = RoundedCornerShape(20.dp),
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-                    elevation = CardDefaults.cardElevation(4.dp)
+
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surface
+                    ),
+
+                    elevation = CardDefaults.cardElevation(
+                        defaultElevation = 0.dp
+                    )
                 ) {
 
                     Column(modifier = Modifier.padding(16.dp)) {

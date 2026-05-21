@@ -27,6 +27,9 @@ import com.example.a207395_liuzhaohe_izwan_lab.R
 import com.example.a207395_liuzhaohe_izwan_lab.viewmodel.WaterViewModel
 import kotlinx.coroutines.launch
 import java.util.Locale
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.draw.shadow
 
 /**
  * 【Task 1: Define Screens】
@@ -34,7 +37,8 @@ import java.util.Locale
  * 运行逻辑：遍历 viewModel 中的所有数据项，并将每一项与国家标准线进行双线对比。
  */
 @Composable
-fun CompareScreen(viewModel: WaterViewModel) {
+fun CompareScreen(viewModel:WaterViewModel){
+    val homeList by viewModel.homeList.collectAsState()
     // 状态管理：控制对比的基准水平（低/中/高）
     var selectedLevel by remember { mutableStateOf(230f) }
     // 用来控制“顶部提示”的显示
@@ -157,15 +161,29 @@ fun CompareScreen(viewModel: WaterViewModel) {
             // 使用 ViewModel 中的数据
             // ViewModel 的数据在屏幕旋转（configuration change）时不会丢失
             // 因此 UI 会自动恢复状态
-            viewModel.homeList.forEach { home ->
+            homeList.forEach{ home ->
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 8.dp),
+                        .padding(
+                            horizontal = 2.dp,
+                            vertical = 8.dp
+                        )
+                        .shadow(
+                            elevation = 8.dp,
+                            shape = RoundedCornerShape(20.dp),
+                            clip = false
+                        ),
+
                     shape = RoundedCornerShape(20.dp),
-                    // 使用 surface 颜色和 4.dp 阴影，与 Stats 页面完全对齐
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-                    elevation = CardDefaults.cardElevation(4.dp)
+
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surface
+                    ),
+
+                    elevation = CardDefaults.cardElevation(
+                        defaultElevation = 0.dp
+                    )
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Text(text = home.home_name, fontSize = 20.sp, fontWeight = FontWeight.Bold)

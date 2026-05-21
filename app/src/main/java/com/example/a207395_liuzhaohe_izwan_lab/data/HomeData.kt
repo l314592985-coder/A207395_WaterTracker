@@ -1,30 +1,66 @@
 package com.example.a207395_liuzhaohe_izwan_lab.data
 
-import androidx.compose.runtime.mutableStateListOf
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-// 定义数据类 (Task 2)
-// 检查你的数据类定义
+/**
+ * ================= Room Entity =================
+ *
+ * Entity：
+ * 可以理解为数据库中的一张表（Table）
+ *
+ * 以前：
+ * HomeData 只是普通 Kotlin 对象
+ *
+ * 现在：
+ * HomeData 会自动生成数据库表
+ *
+ * 表结构大概会变成：
+ *
+ * id | home_name | current | target | history
+ *
+ */
+
+@Entity(tableName="home_table")
 data class HomeData(
-    val home_name: String, //  字段1
-    var current: Double, //  字段2
-    /**target：每日用水上限
-     * 原来这里是 val（只读）
-     * val 创建后就不能修改
-     * 现在改成 var（可修改）
-     * 因为 Profile 页面需要动态修改每日上限
-     * 比如：
-     * 200L -> 250L -> 300L
-     * WaterScreen 的：
-     * Usage: current / target
-     * 饼图的：
-     * current / target
-     * 都会跟着自动更新*/
-    var target: Double = 200.0,
-    // 字段4：用于存储历史记录，供 Stats 和 Compare 页面共享
-    val history: MutableList<Double> = mutableStateListOf(),
-    // --- 新增：提醒开关状态 ---
-    // 数据模型中的字段（属于应用数据）
-    // 通常由 ViewModel 管理，可长期保存
-    var isTargetAlertEnabled: Boolean = false,
-    var isActivityAlertEnabled: Boolean = false
+
+    /**
+     * PrimaryKey：
+     * 主键
+     *
+     * autoGenerate=true：
+     * Room 自动编号
+     */
+    @PrimaryKey(autoGenerate=true)
+    val id:Int=0,
+
+    val home_name:String,
+
+    var current:Double,
+
+    var target:Double=200.0,
+
+    /**
+     * 保存历史记录
+     *
+     * 格式：
+     *
+     * 5,2,3
+     *
+     * 表示：
+     *
+     * 第一次 +5L
+     * 第二次 +2L
+     * 第三次 +3L
+     *
+     * Undo：
+     *
+     * 删除最后一个值
+     */
+
+    var history:String="",
+
+    var isTargetAlertEnabled:Boolean=false,
+
+    var isActivityAlertEnabled:Boolean=false
 )

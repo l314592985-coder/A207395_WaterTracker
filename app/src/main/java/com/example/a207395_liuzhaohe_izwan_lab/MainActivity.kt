@@ -22,22 +22,6 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.navigation.compose.composable
-import com.example.compose.backgroundDark
-import com.example.compose.backgroundLight
-import com.example.compose.onBackgroundDark
-import com.example.compose.onBackgroundLight
-import com.example.compose.onPrimaryDark
-import com.example.compose.onPrimaryLight
-import com.example.compose.onSecondaryDark
-import com.example.compose.onSecondaryLight
-import com.example.compose.onSurfaceDark
-import com.example.compose.onSurfaceLight
-import com.example.compose.primaryDark
-import com.example.compose.primaryLight
-import com.example.compose.secondaryDark
-import com.example.compose.secondaryLight
-import com.example.compose.surfaceDark
-import com.example.compose.surfaceLight
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.a207395_liuzhaohe_izwan_lab.screen.ProfileScreen
 import com.example.a207395_liuzhaohe_izwan_lab.screen.ReminderScreen
@@ -45,50 +29,13 @@ import com.example.a207395_liuzhaohe_izwan_lab.screen.StatsScreen
 import com.example.a207395_liuzhaohe_izwan_lab.screen.WaterTrackerScreen
 import com.example.a207395_liuzhaohe_izwan_lab.viewmodel.WaterViewModel
 import com.example.a207395_liuzhaohe_izwan_lab4.ui.CompareScreen
-
-private val LightColors = lightColorScheme(
-    primary = primaryLight,
-    onPrimary = onPrimaryLight,
-
-    secondary = secondaryLight,
-    onSecondary = onSecondaryLight,
-
-    background = backgroundLight,
-    onBackground = onBackgroundLight,
-
-    surface = surfaceLight,
-    onSurface = onSurfaceLight
-)
-
-private val DarkColors = darkColorScheme(
-    primary = primaryDark,
-    onPrimary = onPrimaryDark,
-
-    secondary = secondaryDark,
-    onSecondary = onSecondaryDark,
-
-    background = backgroundDark,
-    onBackground = onBackgroundDark,
-
-    surface = surfaceDark,
-    onSurface = onSurfaceDark
-)
-
-@Composable
-fun MyAppTheme(content: @Composable () -> Unit) {
-    val darkTheme = isSystemInDarkTheme()
-    // 使用 MaterialTheme 统一管理颜色、字体、组件风格
-    // 所有 UI 组件都会继承这个 Theme
-    val colors = if (darkTheme) DarkColors else LightColors
-    // 根据系统深浅模式切换颜色
-
-    MaterialTheme(
-        //控制全局颜色 更改可以从color.kt或theme.kt修改 primary是用户放更多注意力的地方 surface是容器
-        colorScheme = colors,
-        typography = Typography(),
-        content = content
-    )
-}
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.platform.LocalContext
+import com.example.a207395_liuzhaohe_izwan_lab.data.HomeDatabase
+import com.example.a207395_liuzhaohe_izwan_lab.data.HomeRepository
+import com.example.compose.AppTheme
+import androidx.compose.ui.graphics.Color
 
 class MainActivity : ComponentActivity() {
     // 这个注解表示：该函数需要 Android O(API 26) 及以上版本
@@ -102,22 +49,58 @@ class MainActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         // Jetpack Compose 的入口点
-        // 所有 UI 都必须写在 setContent {} 内
+        // 所有 UI 都必须 write 在 setContent {} 内
         setContent {
 
+            // 获取系统当前的深浅色状态
+            val isDark = isSystemInDarkTheme()
+
             // 应用主题（颜色、字体、形状统一管理）
-            MyAppTheme {
+            AppTheme(
+                darkTheme = isDark, // ✅ 绑定系统状态值，解决页面无法跟手跟随系统主题切换的问题
+                dynamicColor = false
+            ) {
                 // NavController：导航控制器（核心对象）
                 // 负责页面跳转、返回栈管理（类似传统 FragmentManager）
                 val navController = androidx.navigation.compose.rememberNavController()
                 // ViewModel：数据层（MVVM架构核心）
                 // 生命周期安全（旋转屏幕不会丢数据）
+                // 先获取 Context
+                val context = LocalContext.current
+
+                // 再创建数据库
+                val database = remember {
+                    HomeDatabase.getDatabase(context)
+                }
+
+                // 创建 Repository
+                val repository = remember {
+                    HomeRepository(
+                        database.homeDao()
+                    )
+                }
+
+                // 创建 ViewModel
                 val viewModel: WaterViewModel =
-                    androidx.lifecycle.viewmodel.compose.viewModel()
+                    viewModel(
+                        factory =
+                            object : androidx.lifecycle.ViewModelProvider.Factory {
+
+                                override fun <T : ViewModel> create(
+                                    modelClass: Class<T>
+                                ): T {
+
+                                    return WaterViewModel(
+                                        repository
+                                    ) as T
+                                }
+                            }
+                    )
 
                 // Scaffold：Material Design 页面结构容器
                 // 提供：TopBar / BottomBar / FloatingButton 等布局槽位
                 Scaffold(
+                    containerColor = MaterialTheme.colorScheme.background,
                     bottomBar = {
                         // 自定义底部导航组件
                         // navController 传进去是为了让点击按钮可以触发页面跳转
@@ -168,49 +151,93 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun BottomNavigationBar(navController: androidx.navigation.NavController) {
+fun BottomNavigationBar(
+    navController: androidx.navigation.NavController
+) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
-    NavigationBar(containerColor = MaterialTheme.colorScheme.surface) {
+    NavigationBar(
+        containerColor = MaterialTheme.colorScheme.surface,
+        tonalElevation = 0.dp
+    ) {
+
         NavigationBarItem(
             selected = currentRoute == "home",
-            onClick = { navController.navigate("home") { launchSingleTop = true } },
+            onClick = {
+                navController.navigate("home") {
+                    launchSingleTop = true
+                }
+            },
             icon = { Icon(Icons.Default.Home, null) },
-            label = { Text("Home") }
+            label = { Text("Home") },
+            colors = NavigationBarItemDefaults.colors(
+                indicatorColor =
+                    MaterialTheme.colorScheme.primary.copy(alpha = 0.15f)
+            )
         )
 
         NavigationBarItem(
             selected = currentRoute == "stats",
-            onClick = { navController.navigate("stats") { launchSingleTop = true } },
+            onClick = {
+                navController.navigate("stats") {
+                    launchSingleTop = true
+                }
+            },
             icon = { Icon(Icons.Default.BarChart, null) },
-            label = { Text("Stats") }
+            label = { Text("Stats") },
+            colors = NavigationBarItemDefaults.colors(
+                indicatorColor =
+                    MaterialTheme.colorScheme.primary.copy(alpha = 0.15f)
+            )
         )
 
-        // 在 BottomNavigationBar 内部
         NavigationBarItem(
-            selected = currentRoute == "Compare", // 如果当前路径是 Compare，图标变亮
-            onClick = { navController.navigate("Compare") { launchSingleTop = true } },
-            icon = { Icon(Icons.Default.CompareArrows, null) }, // 使用对比图标
-            label = { Text("Compare") }
+            selected = currentRoute == "Compare",
+            onClick = {
+                navController.navigate("Compare") {
+                    launchSingleTop = true
+                }
+            },
+            icon = { Icon(Icons.Default.CompareArrows, null) },
+            label = { Text("Compare") },
+            colors = NavigationBarItemDefaults.colors(
+                indicatorColor =
+                    MaterialTheme.colorScheme.primary.copy(alpha = 0.15f)
+            )
         )
 
         NavigationBarItem(
             selected = currentRoute == "Reminder",
-            onClick = { navController.navigate("Reminder") { launchSingleTop = true } },
+            onClick = {
+                navController.navigate("Reminder") {
+                    launchSingleTop = true
+                }
+            },
             icon = { Icon(Icons.Default.Notifications, null) },
-            label = { Text("Reminder") }
+            label = { Text("Reminder") },
+            colors = NavigationBarItemDefaults.colors(
+                indicatorColor =
+                    MaterialTheme.colorScheme.primary.copy(alpha = 0.15f)
+            )
         )
 
         NavigationBarItem(
             selected = currentRoute == "Profile",
-            onClick = { navController.navigate("Profile") { launchSingleTop = true } },
+            onClick = {
+                navController.navigate("Profile") {
+                    launchSingleTop = true
+                }
+            },
             icon = { Icon(Icons.Default.Person, null) },
-            label = { Text("Profile") }
+            label = { Text("Profile") },
+            colors = NavigationBarItemDefaults.colors(
+                indicatorColor =
+                    MaterialTheme.colorScheme.primary.copy(alpha = 0.15f)
+            )
         )
     }
 }
-
 
 @Composable
 fun CardContentBox(title: String, content: @Composable () -> Unit) {

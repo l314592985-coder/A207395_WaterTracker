@@ -17,9 +17,12 @@ import androidx.compose.ui.unit.sp
 import com.example.a207395_liuzhaohe_izwan_lab.R
 import com.example.a207395_liuzhaohe_izwan_lab.viewmodel.WaterViewModel
 import kotlinx.coroutines.launch
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 
 @Composable
-fun ReminderScreen(viewModel: WaterViewModel) { //去掉括号里的参数
+fun ReminderScreen(viewModel: WaterViewModel){
+    val homeList by viewModel.homeList.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
@@ -76,7 +79,7 @@ fun ReminderScreen(viewModel: WaterViewModel) { //去掉括号里的参数
             // 使用 ViewModel 中的数据
             // ViewModel 的数据在屏幕旋转（configuration change）时不会丢失
             // 因此 UI 会自动恢复状态
-            viewModel.homeList.forEach { home ->
+            homeList.forEach{ home ->
                 ExpandableReminderCard(
                     homeName = home.home_name,
                     onStatusChange = { msg ->

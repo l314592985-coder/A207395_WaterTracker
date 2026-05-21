@@ -68,10 +68,14 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.TextStyle
 import java.util.Locale
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.draw.shadow
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun WaterTrackerScreen(viewModel: WaterViewModel) {
+fun WaterTrackerScreen(viewModel: WaterViewModel){
+    val homeList by viewModel.homeList.collectAsState()
     // --- 核心：删除了旧的 homes, homeNames, history 变量 ---
     var selectedHome by remember { mutableIntStateOf(0) }
     var showInputDialog by remember { mutableStateOf(false) }
@@ -133,7 +137,7 @@ fun WaterTrackerScreen(viewModel: WaterViewModel) {
 
             // --- 修改点：遍历 viewModel 里的数据 ---
             // --- 修改位置：WaterTrackerScreen 函数内部的循环部分 ---
-            viewModel.homeList.forEachIndexed { index, home ->
+            homeList.forEachIndexed { index,home->
                 HomeProgressCard(
                     homeName = home.home_name,
                     current = home.current, // 这里的 current 现在是由 ViewModel 驱动的
@@ -207,7 +211,7 @@ fun WaterTrackerScreen(viewModel: WaterViewModel) {
             AlertDialog(
                 onDismissRequest = { showDeleteDialog = false },
                 title = { Text("Delete Home") },
-                text = { Text("Are you sure you want to delete \"${viewModel.homeList.getOrNull(deleteIndex)?.home_name ?: ""}\"?") },
+                text = { Text("Are you sure you want to delete \"${homeList.getOrNull(deleteIndex)?.home_name ?: ""}\"?") },
                 confirmButton = {
                     Button(onClick = {
                         if (deleteIndex != -1) {
@@ -320,21 +324,26 @@ fun HomeProgressCard(
     val primaryColor = MaterialTheme.colorScheme.primary
 
     Card(
-        // Card 是 Material Design 组件 创建分组
-        // 提供层级（Elevation）
-        //比column更好是因为可以提供层级
         onClick = { expanded = !expanded },
-        //点击卡片
+
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp)
+            .shadow(
+                elevation = 8.dp,
+                shape = RoundedCornerShape(20.dp),
+                clip = false
+            ),
+
         shape = RoundedCornerShape(20.dp),
+
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
         ),
-        // Elevation 表示层级
-        elevation = CardDefaults.cardElevation(8.dp),
-        //阴影高度 高度越大越明显
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp)//卡片大小
+
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 0.dp
+        )
     ) {
 
         Column(modifier = Modifier.padding(16.dp)) {
