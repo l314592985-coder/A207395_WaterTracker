@@ -10,6 +10,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -69,12 +70,15 @@ import java.time.LocalDate
 import java.time.format.TextStyle
 import java.util.Locale
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.draw.shadow
+import androidx.navigation.NavController
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun WaterTrackerScreen(viewModel: WaterViewModel){
+fun WaterTrackerScreen(
+    viewModel: WaterViewModel,
+    navController: NavController
+){
     val homeList by viewModel.homeList.collectAsState()
     // --- 核心：删除了旧的 homes, homeNames, history 变量 ---
     var selectedHome by remember { mutableIntStateOf(0) }
@@ -106,34 +110,38 @@ fun WaterTrackerScreen(viewModel: WaterViewModel){
                 .verticalScroll(rememberScrollState())
         ) {
             // 标题
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(top = 20.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 20.dp)
             ) {
-                Text("Water Tracker", color = MaterialTheme.colorScheme.onBackground, fontSize = 35.sp, fontWeight = FontWeight.ExtraBold)
-                if (viewModel.avatarUri != null) {
-                    AsyncImage(
-                        model = viewModel.avatarUri,
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .size(50.dp)
-                            .clip(CircleShape)
-                    )
-                } else {
-                    Image(
-                        painter = painterResource(R.drawable.avatar),
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .size(50.dp)
-                            .clip(CircleShape)
+                Text(
+                    text = "Water Tracker",
+                    color = MaterialTheme.colorScheme.onBackground,
+                    fontSize = 35.sp,
+                    fontWeight = FontWeight.ExtraBold
+                )
+
+                Spacer(
+                    modifier = Modifier.height(5.dp)
+                )
+
+                TextButton(
+                    onClick = {
+                        navController.navigate("weather")
+                    },
+                    contentPadding = PaddingValues(0.dp)
+                ) {
+
+                    Text(
+                        text = "📍 ${viewModel.cityName}",
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.height(30.dp))
+            Spacer(modifier = Modifier.height(5.dp))
 
             // --- 修改点：遍历 viewModel 里的数据 ---
             // --- 修改位置：WaterTrackerScreen 函数内部的循环部分 ---

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "216163854828",
+    "project_id": "water-usage-tracker-4b3e5",
+    "storage_bucket": "water-usage-tracker-4b3e5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:216163854828:android:cd10e6aef04068eb4838c9",
+        "android_client_info": {
+          "package_name": "com.example.a207395_liuzhaohe_izwan_lab"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTwVC7TAuTrj0KFj6ONsYS1a4107WDh9A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

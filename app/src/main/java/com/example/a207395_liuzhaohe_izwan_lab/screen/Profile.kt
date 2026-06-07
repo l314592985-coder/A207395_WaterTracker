@@ -6,8 +6,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -27,13 +29,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.a207395_liuzhaohe_izwan_lab.R
 import com.example.a207395_liuzhaohe_izwan_lab.viewmodel.WaterViewModel
 import kotlinx.coroutines.launch
 
 @Composable
-fun ProfileScreen(viewModel: WaterViewModel) {
+fun ProfileScreen(
+    viewModel: WaterViewModel,
+    navController: NavController
+) {
 //================= 新增：系统相册选择器 =================
     // rememberLauncherForActivityResult：
     // Android 官方提供的 Activity 返回结果接收器
@@ -56,7 +62,11 @@ fun ProfileScreen(viewModel: WaterViewModel) {
     var inputLimit by remember {
         mutableStateOf(viewModel.dailyLimit.toInt().toString())
     }
-
+    var inputWeight by remember {
+        mutableStateOf(
+            viewModel.userWeight.toInt().toString()
+        )
+    }
     /**Snackbar 状态控制器
      * 用来弹顶部提示*/
     val snackbarHostState = remember { SnackbarHostState() }
@@ -89,6 +99,9 @@ fun ProfileScreen(viewModel: WaterViewModel) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .verticalScroll(
+                    rememberScrollState()
+                )
                 .statusBarsPadding()
                 .padding(horizontal = 25.dp)
         ) {
@@ -224,6 +237,164 @@ fun ProfileScreen(viewModel: WaterViewModel) {
                     ) {
                         Text(
                             text = "Update",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 16.sp
+                        )
+                    }
+                }
+            }
+
+            Spacer(
+                modifier = Modifier.height(1.dp)
+            )
+
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp)
+                    .shadow(
+                        elevation = 8.dp,
+                        shape = RoundedCornerShape(20.dp),
+                        clip = false
+                    ),
+                shape = RoundedCornerShape(20.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surface
+                ),
+                elevation = CardDefaults.cardElevation(
+                    defaultElevation = 0.dp
+                )
+            ) {
+                Column(
+                    modifier = Modifier.padding(16.dp)
+                ) {
+                    Text(
+                        text = "Body Weight",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
+
+                    Spacer(
+                        modifier = Modifier.height(15.dp)
+                    )
+
+                    OutlinedTextField(
+                        value = inputWeight,
+                        onValueChange = {
+                            inputWeight = it
+                        },
+                        label = {
+                            Text("Enter Weight (kg)")
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                        singleLine = true
+                    )
+
+                    Spacer(
+                        modifier = Modifier.height(20.dp)
+                    )
+
+                    Button(
+                        onClick = {
+                            val weight =
+                                inputWeight.toDoubleOrNull()
+                            if(weight != null && weight > 0){
+                                viewModel.updateWeight(
+                                    weight
+                                )
+                                inputWeight =
+                                    weight.toInt().toString()
+                                scope.launch {
+                                    snackbarHostState.showSnackbar(
+                                        "Weight updated to ${weight.toInt()} kg"
+                                    )
+                                }
+                            }
+                        },
+
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(55.dp),
+                        shape = RoundedCornerShape(15.dp),
+                        elevation = ButtonDefaults.buttonElevation(
+                            defaultElevation = 8.dp
+                        ),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor =
+                                MaterialTheme.colorScheme.primary
+                        )
+                    ) {
+                        Text(
+                            text = "Save Weight",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 16.sp
+                        )
+                    }
+                }
+            }
+
+            Spacer(
+                modifier = Modifier.height(1.dp)
+            )
+
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp)
+                    .shadow(
+                        elevation = 8.dp,
+                        shape = RoundedCornerShape(20.dp),
+                        clip = false
+                    ),
+
+                shape = RoundedCornerShape(20.dp),
+
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surface
+                ),
+
+                elevation = CardDefaults.cardElevation(
+                    defaultElevation = 0.dp
+                )
+            ) {
+
+                Column(
+                    modifier = Modifier.padding(16.dp)
+                ) {
+
+                    Text(
+                        text = "Advanced Features",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
+
+                    Spacer(
+                        modifier = Modifier.height(12.dp)
+                    )
+
+                    Button(
+                        onClick = {
+                            navController.navigate("community")
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(55.dp),
+
+                        shape = RoundedCornerShape(15.dp),
+
+                        elevation = ButtonDefaults.buttonElevation(
+                            defaultElevation = 8.dp
+                        ),
+
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor =
+                                MaterialTheme.colorScheme.primary
+                        )
+                    ) {
+                        Text(
+                            text = "Community Sharing",
                             fontWeight = FontWeight.Bold,
                             fontSize = 16.sp
                         )

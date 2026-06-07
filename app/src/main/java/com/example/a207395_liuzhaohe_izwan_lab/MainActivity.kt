@@ -35,7 +35,10 @@ import androidx.compose.ui.platform.LocalContext
 import com.example.a207395_liuzhaohe_izwan_lab.data.HomeDatabase
 import com.example.a207395_liuzhaohe_izwan_lab.data.HomeRepository
 import com.example.compose.AppTheme
-import androidx.compose.ui.graphics.Color
+import com.example.a207395_liuzhaohe_izwan_lab.screen.WeatherScreen
+import com.example.a207395_liuzhaohe_izwan_lab.screen.CommunityScreen
+import android.Manifest
+import androidx.activity.result.contract.ActivityResultContracts
 
 class MainActivity : ComponentActivity() {
     // 这个注解表示：该函数需要 Android O(API 26) 及以上版本
@@ -43,6 +46,15 @@ class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        registerForActivityResult(
+            ActivityResultContracts
+                .RequestPermission()
+        ){ }
+            .launch(
+                Manifest.permission
+                    .ACCESS_FINE_LOCATION
+            )
 
         // 让界面可以绘制到状态栏区域（沉浸式UI）
         // false = 内容可以延伸到系统栏（更现代的UI设计）
@@ -126,7 +138,10 @@ class MainActivity : ComponentActivity() {
                         // composable(route) = 定义一个页面
                         // 当 route = "home" 时，这个页面会被显示
                         composable("home") {
-                            WaterTrackerScreen(viewModel)
+                            WaterTrackerScreen(
+                                viewModel,
+                                navController
+                            )
                         }
                         composable("stats") {
                             StatsScreen(viewModel)
@@ -141,7 +156,22 @@ class MainActivity : ComponentActivity() {
                         }
                         // 目前只是一个简单 UI，没有逻辑
                         composable("Profile") {
-                            ProfileScreen(viewModel)
+                            ProfileScreen(
+                                viewModel = viewModel,
+                                navController = navController
+                            )
+                        }
+                        composable("weather") {
+                            WeatherScreen(
+                                viewModel = viewModel,
+                                navController = navController
+                            )
+                        }
+                        composable("community") {
+                            CommunityScreen(
+                                viewModel = viewModel,
+                                navController = navController
+                            )
                         }
                     }
                 }
