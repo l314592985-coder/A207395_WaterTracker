@@ -4,301 +4,123 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Water Usage Tracker ePortfolio</title>
-
 <style>
-body{
-font-family:Arial,sans-serif;
-margin:0;
-background:#eef7ff;
-color:#222;
-}
-
-header{
-background:linear-gradient(135deg,#79c8ff,#dff4ff);
-padding:80px 20px;
-text-align:center;
-}
-
-.card{
-background:white;
-margin:20px auto;
-padding:20px;
-border-radius:15px;
-max-width:1200px;
-box-shadow:0 2px 10px rgba(0,0,0,0.1);
-}
-
-.gallery{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:10px;
-}
-
-.gallery img{
-width:100%;
-height:220px;
-object-fit:contain;
-border:1px solid #ddd;
-border-radius:10px;
-background:white;
-}
-
-.btn{
-display:inline-block;
-padding:10px 15px;
-background:#4aaeff;
-color:white;
-text-decoration:none;
-border-radius:8px;
-margin-top:10px;
-}
-
-@media(max-width:900px){
-.gallery{
-grid-template-columns:repeat(2,1fr);
-}
-}
-
-@media(max-width:600px){
-.gallery{
-grid-template-columns:1fr;
-}
-}
+body{font-family:Arial,sans-serif;margin:0;background:#eef7ff;color:#222;line-height:1.7}
+header{background:linear-gradient(135deg,#79c8ff,#dff4ff);padding:80px 20px;text-align:center}
+nav{position:sticky;top:0;background:#0c5f93;padding:12px;text-align:center}
+nav a{color:white;text-decoration:none;margin:0 12px;font-weight:bold}
+section{max-width:1200px;margin:auto;padding:35px 20px}
+.card{background:white;border-radius:16px;padding:24px;margin:22px 0;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.gallery img{width:100%;height:220px;object-fit:contain;background:#f8fbff;border:1px solid #dbe8f5;border-radius:10px}
+.btn{display:inline-block;background:#4aaeff;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;margin-right:8px}
+@media(max-width:900px){.gallery{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.gallery{grid-template-columns:1fr}}
 </style>
 </head>
-
 <body>
-
 <header>
 <h1>LIU ZHAOHE</h1>
-<h2>A207395 | Software Engineering</h2>
-<p><strong>Instructor:</strong> Cikgu Izwan</p>
-<h3>SDG 6: Clean Water and Sanitation</h3>
-<p><strong>Water Usage Tracker</strong></p>
-<p>
-Water Usage Tracker is a mobile application developed to help users
-monitor daily water consumption, promote sustainable water-saving habits
-and increase awareness of SDG 6.
-</p>
-
-<p>
-The application integrates Room Database, Firebase Firestore,
-Weather API, GPS Location and Step Counter Sensor
-to provide a complete water management solution.
-</p>
+<h3>A207395 | Software Engineering</h3>
+<h2>SDG 6: Clean Water and Sanitation</h2>
+<p>Water Usage Tracker</p>
+<p>Instructor: Cikgu Izwan</p>
 </header>
 
+<nav>
+<a href="#sdg">SDG Theme</a>
+<a href="#labs">Lab Submissions</a>
+<a href="#projects">Projects</a>
+<a href="#reflection">Reflection</a>
+<a href="#skills">Skills</a>
+</nav>
+
+<section id="sdg">
 <div class="card">
-<h2>Lab 1</h2>
-<div class="gallery">
-<img src="lab1.png">
+<h2>SDG 6: Clean Water and Sanitation</h2>
+<p>Water is one of the most important resources for sustainable development. Many households are unaware of their daily water consumption patterns, which can lead to unnecessary waste. Water Usage Tracker helps users monitor usage, analyse trends, receive personalised recommendations, and encourage responsible water conservation practices.</p>
 </div>
-<br>
-<a class="btn" href="https://youtu.be/ceyiDDTgOH0">Video</a>
-<p>
-<b>Reflection:</b>
-Lab 1 introduced the fundamentals of Jetpack Compose layouts.
-I learned how to use Column, Row, Box, Card and Image components
-to design structured and responsive user interfaces.
-</p>
-</div>
+</section>
+
+<section id="labs">
+<h2>Lab Submissions</h2>
+
+<div class="card"><h3>Lab 1 – Basic Layout Design</h3>
+<div class="gallery"><img src="Images/lab1.png"></div>
+<p><a class="btn" href="https://youtu.be/ceyiDDTgOH0">Video Demonstration</a></p>
+<p><b>Reflection:</b> I learned how to use Column, Row, Box and Card layouts in Jetpack Compose to build a structured and user-friendly interface.</p></div>
+
+<div class="card"><h3>Lab 2 – State and Interaction</h3>
+<div class="gallery"><img src="Images/lab2.1.png"><img src="Images/lab2.2.png"></div>
+<p><a class="btn" href="https://youtu.be/tFchaBI8QTc">Video Demonstration</a></p>
+<p><b>Reflection:</b> This lab improved my understanding of state management through TextField, Button and mutableStateOf. User actions dynamically updated the interface.</p></div>
+
+<div class="card"><h3>Lab 3 – Material Design</h3>
+<div class="gallery"><img src="Images/lab3.png"></div>
+<p><a class="btn" href="https://youtu.be/bd0TJr_dbMo">Video Demonstration</a></p>
+<p><b>Reflection:</b> I applied themes, colours, typography and cards to improve the overall appearance and usability of the application.</p></div>
+
+<div class="card"><h3>Lab 4 – Navigation and ViewModel</h3>
+<div class="gallery"><img src="Images/lab4.1.png"><img src="Images/lab4.2.png"><img src="Images/lab4.3.png"><img src="Images/lab4.4.png"></div>
+<p><a class="btn" href="https://youtu.be/fXyXh-RI96U">Video Demonstration</a></p>
+<p><b>Reflection:</b> I implemented multiple screens and ViewModel architecture to manage shared data efficiently across the application.</p></div>
+
+<div class="card"><h3>Lab 5 – Room Database</h3>
+<div class="gallery"><img src="Images/lab5.png"></div>
+<p><a class="btn" href="https://youtu.be/KWVlTBPm1_s">Video Demonstration</a></p>
+<p><b>Reflection:</b> I learned how to implement Room Database with Entity, DAO and Repository components to provide persistent local storage.</p></div>
+</section>
+
+<section id="projects">
+<h2>Projects</h2>
 
 <div class="card">
-<h2>Lab 2</h2>
-<div class="gallery">
-<img src="lab2.1.png">
-<img src="lab2.2.png">
-</div>
-<br>
-<a class="btn" href="https://youtu.be/tFchaBI8QTc">Video</a>
-<p>
-<b>Reflection:</b>
-This lab helped me understand state management using TextField,
-Button and mutableStateOf. User actions could dynamically update
-the UI and provide real-time feedback.
-</p>
-</div>
-
-<div class="card">
-<h2>Lab 3</h2>
-<div class="gallery">
-<img src="lab3.png">
-</div>
-<br>
-<a class="btn" href="https://youtu.be/bd0TJr_dbMo">Video</a>
-<p>
-<b>Reflection:</b>
-I explored Material Design principles including themes,
-typography, colours and cards. This improved the visual
-consistency and usability of the application.
-</p>
-</div>
-
-<div class="card">
-<h2>Lab 4</h2>
-<div class="gallery">
-<img src="lab4.1.png">
-<img src="lab4.2.png">
-<img src="lab4.3.png">
-<img src="lab4.4.png">
-</div>
-<br>
-<a class="btn" href="https://youtu.be/fXyXh-RI96U">Video</a>
-<p>
-<b>Reflection:</b>
-I implemented Navigation Compose and ViewModel architecture
-to support multiple screens while maintaining shared application state.
-</p>
+<h3>Project 1 – Water Usage Tracker</h3>
+<div class="gallery"><img src="Images/project1.png"></div>
+<p><b>Problem Statement:</b> Many households do not actively monitor their daily water usage. Without proper tracking, excessive consumption can occur without users noticing.</p>
+<p><a class="btn" href="https://youtu.be/TcFnKa4yQqg">Project 1 Video</a>
+<a class="btn" href="https://github.com/l314592985-coder/A207395_WaterTracker.git">GitHub Repository</a></p>
+<p><b>Lessons Learned:</b> Navigation Compose, ViewModel, state management, chart visualisation and SDG-oriented application development.</p>
 </div>
 
 <div class="card">
-<h2>Lab 5</h2>
+<h3>Project 2 – Advanced Water Usage Tracker</h3>
 <div class="gallery">
-<img src="lab5.png">
+<img src="Images/project2.1.png">
+<img src="Images/project2.2.png">
+<img src="Images/project2.3.png">
+<img src="Images/project2.4.png">
 </div>
-<br>
-<a class="btn" href="https://youtu.be/KWVlTBPm1_s">Video</a>
-<p>
-  
-<b>Reflection:</b>
-Room Database enabled persistent storage of user data.
-I learned how Entity, DAO and Repository components work together
-to support offline data management.
-</p>
-</div>
-  
-<div class="card">
-<h2>Project 1</h2>
-<div class="gallery">
-<img src="project1.png">
-</div>
-  
-<br>
-<a class="btn" href="https://youtu.be/TcFnKa4yQqg">Video</a>
-<a class="btn"
-href="https://github.com/l314592985-coder/A207395_WaterTracker.git">
-GitHub Repository
-</a>
-  
-<p>
-<b>App Name:</b>
-Water Usage Tracker
-</p>
-  
-<p>
-<b>Problem Statement:</b>
-Many households do not actively monitor their daily water consumption.
-Without proper tracking, excessive water usage can occur without users noticing.
-The application helps users record, analyse and improve water usage habits.
-</p>
-  
-<p>
-<b>Lessons Learned:</b>
-Project 1 strengthened my understanding of Navigation Compose,
-ViewModel state management, chart visualisation and multi-screen
-application architecture.
-</p>
-</div>
-
-<div class="card">
-<h2>Project 2</h2>
-<div class="gallery">
-<img src="project2.1.png">
-<img src="project2.2.png">
-<img src="project2.3.png">
-<img src="project2.4.png">
-</div>
-
-<br>
-<a class="btn" href="https://youtu.be/d-uvBXcDdaM">Video</a>
-<a class="btn"
-href="https://github.com/l314592985-coder/A207395_WaterTracker.git">
-GitHub Repository
-</a>
-
-<p>
-<b>App Name:</b>
-Water Usage Tracker
-</p>
-
-<p>
-<b>Problem Statement:</b>
-Water conservation requires accurate monitoring,
-environmental awareness and community participation.
-Traditional tracking systems rarely provide personalised
-recommendations or collaborative engagement.
-</p>
-
-<p>
-<b>Features:</b>
-</p>
-
+<p><b>Problem Statement:</b> Effective water conservation requires accurate monitoring, environmental awareness and community participation. Traditional tracking systems rarely provide personalised recommendations or collaborative engagement.</p>
+<p><b>Features:</b></p>
 <ul>
 <li>Room Database</li>
 <li>Firebase Firestore</li>
-<li>Weather API (Retrofit)</li>
+<li>Weather API using Retrofit</li>
 <li>GPS Location Services</li>
 <li>Step Counter Sensor</li>
 <li>Community Sharing</li>
 <li>Personalised Water Recommendation</li>
 </ul>
-
-<p>
-<b>Lessons Learned:</b>
-This project strengthened my understanding of Room Database,
-Firebase Firestore, REST APIs, hardware sensors and MVVM architecture.
-Integrating multiple technologies into one application improved both
-my technical and problem-solving skills.
-</p>
+<p><a class="btn" href="https://youtu.be/d-uvBXcDdaM">Project 2 Video</a>
+<a class="btn" href="https://github.com/l314592985-coder/A207395_WaterTracker.git">GitHub Repository</a></p>
+<p><b>Lessons Learned:</b> This project strengthened my understanding of MVVM architecture, cloud databases, REST APIs, mobile sensors and scalable Android application development.</p>
 </div>
+</section>
 
+<section id="reflection">
 <div class="card">
 <h2>Reflection & Learning Journey</h2>
-<p>
-From Lab 1 to Project 2, I progressed from creating simple
-Jetpack Compose interfaces to developing a complete Android
-application integrated with Room Database, Firebase Firestore,
-Weather API and hardware sensors.
-</p>
-
-<p>
-One of the biggest challenges was integrating multiple technologies
-while maintaining a clean architecture. Through continuous testing
-and debugging, I improved both my technical knowledge and
-problem-solving abilities.
-</p>
-
-<p>
-This project demonstrates how software engineering can contribute
-to SDG 6 by encouraging responsible water usage and promoting
-sustainable behaviour within communities.
-</p>
+<p>I started this course by learning the basics of Jetpack Compose layouts and gradually progressed to state management, navigation, local databases and cloud services. Through Project 2, I successfully integrated Room Database, Firebase Firestore, Weather API, GPS location and step counter sensors into a complete Android application. This experience improved my technical skills and demonstrated how software engineering can contribute to SDG 6 by encouraging sustainable water management.</p>
 </div>
+</section>
 
+<section id="skills">
 <div class="card">
-<h2>Skills & Tech Stack</h2>
-<p>
-Kotlin, Jetpack Compose, Material Design,
-Navigation Compose, ViewModel,
-Room Database, Firebase Firestore,
-Retrofit, REST API,
-GPS Location, Step Counter Sensor,
-MVVM Architecture, Android Studio and GitHub.
-</p>
+<h2>Skills & Resources</h2>
+<p><b>Technical Skills:</b> Kotlin, Jetpack Compose, Material Design, Navigation Compose, ViewModel, Room Database, Firebase Firestore, Retrofit, REST API, GPS Location, Step Counter Sensor, MVVM Architecture, GitHub and Android Studio.</p>
+<p><b>Resources:</b> Android Developers Documentation, Firebase Documentation, Retrofit Documentation, Weather API Documentation and ChatGPT for learning support.</p>
 </div>
-
-<div class="card">
-<h2>Resources & References</h2>
-<p>
-Android Developers Documentation,
-Jetpack Compose Documentation,
-Firebase Documentation,
-Retrofit Documentation,
-Weather API Documentation,
-Google Location Services Documentation,
-ChatGPT (learning assistance and code explanation).
-</p>
-</div>
-
+</section>
 </body>
 </html>
